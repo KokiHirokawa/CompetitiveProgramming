@@ -7,9 +7,7 @@
                 "/usr/local/include/**"
             ],
             "defines": [],
-            "macFrameworkPath": [
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/System/Library/Frameworks"
-            ],
+            "macFrameworkPath": [],
             "compilerPath": "/usr/local/bin/g++",
             "cStandard": "c17",
             "cppStandard": "c++17",
