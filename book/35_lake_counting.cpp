@@ -20,35 +20,40 @@ const ll MOD = 1000000007;
 const double PI = 3.14159265358979323846264338327950;
 inline int newline() { putchar('\n'); return 0; }
 
-int n, m;
-vector<vector<bool>> a;
+int height, width;
+vector<vector<char>> garden;
+
+const vector<int> dy = {-1, -1, -1, 0, 0, 1, 1, 1}, dx = {-1, 0, 1, -1, 1, -1, 0, 1};
 
 void dfs(int y, int x) {
-    a[y][x] = false;
+    garden[y][x] = '.';
 
-    for (int dy = -1; dy <= 1; dy++) {
-        for (int dx = -1; dx <= 1; dx++) {
-            int ny = y + dy, nx = x + dx;
-            if (0 <= nx && nx < m && 0 <= ny && ny < n && a[ny][nx]) dfs(ny, nx);
+    rep2(i, 8) {
+        int ny = y + dy[i], nx = x + dx[i];
+        if (0 <= ny && ny < height && 0 <= nx && nx < width && garden[ny][nx] == 'W') {
+            dfs(ny, nx);
         }
     }
 }
 
 int main() {
-    cin >> n >> m;
-    a.resize(n);
-    rep2(i, n) a[i].resize(m);
-    rep2(i, n) rep2(j, m) {
+    cin >> height >> width;
+    garden.resize(height);
+    rep2(i, height) garden[i].resize(width);
+    rep2(i, height) rep2(j, width) {
         char temp;
         cin >> temp;
-        a[i][j] = temp == 'W';
+        garden[i][j] = temp;
     }
 
     int res = 0;
-    rep2(i, n) rep2(j, m) if (a[i][j]) {
-        dfs(i, j);
-        res++;
+    rep2(i, height) rep2(j, width) {
+        if (garden[i][j] == 'W') {
+            res++;
+            dfs(i, j);
+        }
     }
+
     printf("%d\n", res);
     return 0;
 }
