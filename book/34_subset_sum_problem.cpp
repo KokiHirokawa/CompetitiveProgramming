@@ -25,7 +25,7 @@ vector<int> a;
 
 bool dfs(int idx, int sum) {
     if (idx == n) return sum == k;
-    return dfs(idx + 1, sum + a[idx]) || dfs(idx + 1, sum);
+    return dfs(idx + 1, sum) || dfs(idx + 1, sum + a[idx]);
 }
 
 int main() {
@@ -34,7 +34,8 @@ int main() {
     rep2(i, n) cin >> a[i];
     cin >> k;
 
-    if (dfs(0, 0)) { print("YES\n"); }
-    else { print("NO\n"); }
+    bool res = dfs(0, 0);
+    if (res) printf("Yes\n");
+    else printf("No\n");
     return 0;
 }
