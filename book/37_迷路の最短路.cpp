@@ -22,45 +22,17 @@ inline int newline() { putchar('\n'); return 0; }
 
 typedef pair<int, int> P;
 
-int N, M;
-vector<vector<char>> maze;
-vector<vector<int>> d;
-int sx, sy, gx, gy;
-int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
-
-int bfs() {
-    queue<P> que;
-    que.push(P(sy, sx));
-    d[sy][sx] = 0;
-
-    while (que.size()) {
-        P p = que.front(); que.pop();
-        if (p.first == gy && p.second == gx) break;
-
-        rep2(i, 4) {
-            int ny = p.first + dy[i], nx = p.second + dx[i];
-            if (0 <= nx && nx < M && 0 <= ny && ny < N && maze[ny][nx] != '#' && d[ny][nx] == INT32_MAX) {
-                que.push(P(ny, nx));
-                d[ny][nx] = d[p.first][p.second] + 1;
-            }
-        }
-    }
-
-    return d[gy][gx];
-}
-
 int main() {
-    cin >> N >> M;
+    int height, width;
+    cin >> height >> width;
 
-    maze.resize(N);
-    d.resize(N);
-    rep2(i, N) {
-        maze[i].resize(M);
-        d[i].resize(M);
-    }
-    rep2(i, N) rep2(j, M) {
-        d[i][j] = INT32_MAX;
+    int sx, sy, gx, gy;
+    vector<int> dx = {-1, 0, 0, 1}, dy = {0, -1, 1, 0};
 
+    vector<vector<char>> maze(height, vector<char>(width));
+    vector<vector<int>> d(height, vector<int>(width, INT32_MAX));
+
+    rep2(i, height) rep2(j, width) {
         char temp;
         cin >> temp;
         maze[i][j] = temp;
@@ -74,7 +46,23 @@ int main() {
         }
     }
 
-    int res = bfs();
-    printf("%d\n", res);
+    queue<P> que;
+    que.push(make_pair(sy, sx));
+    d[sy][sx] = 0;
+
+    while (!que.empty()) {
+        P top = que.front();
+        que.pop();
+
+        rep2(i, 4) {
+            int ny = top.first + dy[i], nx = top.second + dx[i];
+            if (0 <= ny && ny < height && 0 <= nx && nx < width && maze[ny][nx] != '#' && d[ny][nx] == INT32_MAX) {
+                que.push(make_pair(ny, nx));
+                d[ny][nx] = d[top.first][top.second] + 1;
+            }
+        }
+    }
+
+    printf("%d\n", d[gy][gx]);
     return 0;
 }
