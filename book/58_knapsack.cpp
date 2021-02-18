@@ -33,8 +33,10 @@ int main() {
     vector<vector<int>> dp(n + 1, vector<int>(limit + 1, 0));
 
     rep2(i, n) erep2(j, limit) {
-        for (int k = 0; k * w[i] <= j; k++) {
-            dp[i + 1][j] = max(dp[i + 1][j], dp[i][j - k * w[i]] + k * v[i]);
+        if (j < w[i]) {
+            dp[i + 1][j] = dp[i][j];
+        } else {
+            dp[i + 1][j] = max(dp[i][j], dp[i + 1][j - w[i]] + v[i]);
         }
     }
 
