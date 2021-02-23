@@ -20,19 +20,23 @@ const ll MOD = 1000000007;
 const double PI = 3.14159265358979323846264338327950;
 inline int newline() { putchar('\n'); return 0; }
 
-string s;
+vector<int> a;
 
-ll dfs(int idx, int prev, ll sum) {
-    string source = s.substr(prev, idx - prev + 1);
-    if (idx == s.length() - 1) {
-        return sum + stoll(source);
-    } else {
-        return dfs(idx + 1, prev, sum) + dfs(idx + 1, idx + 1, sum + stoll(source));
-    }
+ll dfs(int idx, ll sum, ll additional) {
+    ll add = additional * 10;
+
+    if (idx == a.size() - 1) return sum + add + a[idx];
+    else return dfs(idx + 1, sum + add + a[idx], 0) + dfs(idx + 1, sum, add + a[idx]);
 }
 
 int main() {
-    cin >> s;
+    string temp;
+    cin >> temp;
+
+    int length = temp.length();
+    a.resize(length);
+    rep2(i, length) a[i] = (int)temp[i] - '0';
+
     printf("%lld\n", dfs(0, 0, 0));
     return 0;
 }
