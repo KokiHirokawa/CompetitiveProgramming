@@ -24,16 +24,21 @@ int main() {
     ll n;
     cin >> n;
 
-    vector<bool> isPrime(n + 1, true);
+    vector<bool> isPrime(1001, true);
     isPrime[0] = isPrime[1] = false;
+    bool flag = true;
 
     erep3(i, 2, sqrt(n)) {
         if (!isPrime[i]) continue;
 
-        for (ll j = i * 2; j <= n; j += i) isPrime[j] = false;
+        if (n % i == 0) {
+            printf("NO\n");
+            return 0;
+        }
+
+        for (ll j = i * 2; j <= sqrt(n); j += i) isPrime[j] = false;
     }
 
-    if (isPrime[n]) printf("YES\n");
-    else printf("NO\n");
+    printf("YES\n");
     return 0;
 }
