@@ -27,18 +27,14 @@ int main() {
     vector<bool> isPrime(n + 1, true);
     isPrime[0] = isPrime[1] = false;
 
-    ll res = 0;
+    for (ll i = 2; i * i <= n; ++i) {
+        if (!isPrime[i]) continue;
 
-    rep3(i, 2, n + 1) {
-        if (isPrime[i]) res++;
-        else continue;
-
-        ll j = i * 2;
-        while (j < n + 1) {
-            isPrime[j] = false;
-            j += i;
-        }
+        for (ll j = i * 2; j <= n; j += i) isPrime[j] = false;
     }
+
+    ll res = 0;
+    for (ll i = 0; i < n; ++i) if (isPrime[i]) ++res;
 
     printf("%lld\n", res);
     return 0;
