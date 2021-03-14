@@ -72,17 +72,6 @@ mint comb(int n, int k) {
     return c[n][k];
 }
 
-mint f2(int n, int k) {
-    return comb(n + k - 1, k - 1);
-}
-
-mint f(int n, int k) {
-    if (n < k) return 0;
-    if (n == 0 && k == 0) return 1;
-    if (k < 1) return 0;
-    return f2(n - k, k);
-}
-
 int main() {
     init();
 
@@ -90,14 +79,8 @@ int main() {
     cin >> n >> k;
 
     erep3(i, 1, k) {
-        mint blue = f(k, i);
-        mint red = 0;
-        {
-            red += f(n - k, i - 1);
-            red += f(n - k, i);
-            red += f(n - k, i);
-            red += f(n - k, i + 1);
-        }
+        mint blue = comb(k - 1, i - 1);
+        mint red = comb(n - k + 1, i);
         mint ans = blue * red;
         printf("%lld\n", ans.x);
     }
