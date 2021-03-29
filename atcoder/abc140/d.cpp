@@ -27,12 +27,10 @@ int main() {
     string s;
     cin >> s;
 
-    int score = 0;
-    rep2(i, n - 1) {
-        if (s[i] == s[i + 1]) score++;
-    }
+    int current = 0;
+    rep2(i, n) if (i != 0 && s[i - 1] == s[i]) current++;
 
-    int ans = min(score + 2 * k, n - 1);
-    cout << ans << endl;
+    ll res = min(n - 1, current + 2 * k);
+    print(res);
     return 0;
 }
